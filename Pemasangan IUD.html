@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checklist OSCE</title>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            padding: 20px; 
+            margin-bottom: 200px; 
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 2px solid #ddd; padding: 10px; text-align: left; }
+        .center { text-align: center; }
+        .total-box { margin-top: 20px; font-weight: bold; font-size: 1.2em; }
+        textarea { width: 100%; box-sizing: border-box; resize: vertical; }
+
+        /* POP-UP ISLAND TIMER */
+        .timer-island {
+            position: fixed; 
+            top: 20px;       
+            right: 20px;     
+            background-color: #2c3e50; 
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            z-index: 1000;   
+            display: flex;
+            align-items: center;
+            gap: 15px;       
+        }
+
+        .timer-display {
+            font-size: 1.5em;
+            font-weight: bold;
+            font-family: monospace; 
+        }
+
+        /* Warna teks berubah merah jika waktu kritis (di bawah 1 menit) */
+        .waktu-kritis {
+            color: #e74c3c;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0.5; }
+        }
+
+        .timer-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .timer-btn:hover { background-color: #2980b9; }
+        .btn-reset { background-color: #e74c3c; }
+        .btn-reset:hover { background-color: #c0392b; }
+    </style>
+</head>
+<body>
+
+    <div class="timer-island">
+        <div class="timer-display" id="timerDisplay">07:00</div>
+        <button class="timer-btn" id="startPauseBtn">Start</button>
+        <button class="timer-btn btn-reset" id="resetBtn">Reset</button>
+    </div>
+
+    <h2>Pemasangan IUD</h2>
+    <p><i>Goodluck!</i></p>
+
+    <table>
+        <tr>
+            <th>Langkah Klinik</th>
+            <th class="center">0</th>
+            <th class="center">1</th>
+            <th class="center">2</th>
+            <th class="center">3</th>
+            <th>Catatan</th>
+        </tr>
+        <tr>
+            <td>1. Mengucapkan salam dan membaca basmalah</td>
+            <td class="center"><input type="radio" name="langkah1" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah1" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah1" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah1" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+        <tr>
+            <td>2. Memperkenalkan diri dan menanyakan identitas pasien</td>
+            <td class="center"><input type="radio" name="langkah2" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah2" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah2" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah2" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+                <tr>
+            <td>3. Melakukan simulasi anamnesis</td>
+            <td class="center"><input type="radio" name="langkah3" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah3" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah3" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah3" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+        <tr>
+            <td>4. Menerangkan cara dan tujuan Pemeriksaan</td>
+            <td class="center"><input type="radio" name="langkah4" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah4" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah4" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah4" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+        <tr>
+            <td>5. Informed Consent</td>
+            <td class="center"><input type="radio" name="langkah5" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah5" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah5" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah5" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+        <tr>
+            <td>6. Menyiapkan alat dan bahan pemasang IUD (steril dan nonsteril + lampu)</td>
+            <td class="center"><input type="radio" name="langkah6" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah6" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah6" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah6" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+        <tr>
+            <td>7. Menyiapkan posisi pasien </td>
+            <td class="center"><input type="radio" name="langkah7" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah7" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah7" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah7" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+        <tr>
+            <td>8. Mencuci tangan 6 langkah WHO</td>
+            <td class="center"><input type="radio" name="langkah8" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah8" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah8" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah8" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+        <tr>
+            <td>9. Memasang sarung tangan secara aseptik  </td>
+            <td class="center"><input type="radio" name="langkah9" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah9" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah9" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah9" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+        <tr>
+            <td>10. Melakukan simulasi toilet vulva dan sekitarnya secara legeartis </td>
+            <td class="center"><input type="radio" name="langkah10" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah10" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah10" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah10" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+        <tr>
+            <td>11. Menutup area genital dengan kain duk steril  </td>
+            <td class="center"><input type="radio" name="langkah11" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah11" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah11" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah11" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>
+        <tr>
+            <td>12. Memilih spekulum dan mengatur sekrupnya  </td>
+            <td class="center"><input type="radio" name="langkah12" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah12" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah12" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah12" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>13. Memasang spekulum dengan tangan kanan </td>
+            <td class="center"><input type="radio" name="langkah13" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah13" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah13" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah13" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>14. Menampilkan serviks dengan membuka spekulum </td>
+            <td class="center"><input type="radio" name="langkah14" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah14" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah14" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah14" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>15. Mengunci kedudukan spekulum </td>
+            <td class="center"><input type="radio" name="langkah15" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah15" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah15" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah15" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>16. Simulasi membersihkan lubang vagina dengan desinfektan</td>
+            <td class="center"><input type="radio" name="langkah16" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah16" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah16" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah16" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>17. Melakukan simulasi pemasangan tenakulum </td>
+            <td class="center"><input type="radio" name="langkah17" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah17" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah17" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah17" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>18. Melakukan Sondase cavum uteri </td>
+            <td class="center"><input type="radio" name="langkah18" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah18" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah18" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah18" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>19. Melihat angka pada sonde </td>
+            <td class="center"><input type="radio" name="langkah19" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah19" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah19" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah19" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>20. Memasukkan IUD ke dalam cavum uteri dengan teknik "no touch technique"</td>
+            <td class="center"><input type="radio" name="langkah20" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah20" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah20" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah20" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>21. Melakukan simulasi pelepasan tenakulum </td>
+            <td class="center"><input type="radio" name="langkah21" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah21" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah21" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah21" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>22. Melakukan simulasi pemotongan benang IUD </td>
+            <td class="center"><input type="radio" name="langkah22" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah22" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah22" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah22" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>23. Melakukan simulasi mengusap porsio dengan desinfektan </td>
+            <td class="center"><input type="radio" name="langkah23" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah23" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah23" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah23" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>24. Melepaskan spekulum dan meletakkan pada tempatnya</td>
+            <td class="center"><input type="radio" name="langkah24" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah24" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah24" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah24" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>25. Melepas sarung tangan, dan mencuci tangan </td>
+            <td class="center"><input type="radio" name="langkah25" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah25" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah25" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah25" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>        
+        <tr>
+            <td>25. Membaca hamdalah dan mengucapkan salam</td>
+            <td class="center"><input type="radio" name="langkah25" class="score" value="0"></td>
+            <td class="center"><input type="radio" name="langkah25" class="score" value="1"></td>
+            <td class="center"><input type="radio" name="langkah25" class="score" value="2"></td>
+            <td class="center"><input type="radio" name="langkah25" class="score" value="3"></td>
+            <td><textarea rows="1" placeholder="Catatan..."></textarea></td>
+        </tr>  
+    </table>
+
+    <div class="total-box">Total Skor: <span id="total">0</span></div>
+
+    <script>
+        // --- LOGIKA SKOR ---
+        const radioButtons = document.querySelectorAll('.score');
+        const totalDisplay = document.getElementById('total');
+
+        function hitungSkor() {
+            let currentTotal = 0;
+            radioButtons.forEach(radio => {
+                if (radio.checked) currentTotal += parseInt(radio.value);
+            });
+            totalDisplay.innerText = currentTotal;
+        }
+
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', hitungSkor);
+        });
+
+        // --- LOGIKA COUNTDOWN 7 MENIT ---
+        let waktuAwal = 7 * 60; // 7 menit diubah ke detik (420 detik)
+        let sisaWaktu = waktuAwal;
+        let runningInterval = null;
+
+        const timerDisplay = document.getElementById('timerDisplay');
+        const startPauseBtn = document.getElementById('startPauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        function updateDisplay() {
+            let menit = Math.floor(sisaWaktu / 60);
+            let detik = sisaWaktu % 60;
+            
+            menit = menit < 10 ? '0' + menit : menit;
+            detik = detik < 10 ? '0' + detik : detik;
+            
+            timerDisplay.innerText = `${menit}:${detik}`;
+
+            // Efek tambahan: Jika waktu tersisa kurang dari 1 menit (60 detik), teks menjadi merah berkedip
+            if (sisaWaktu <= 60 && sisaWaktu > 0) {
+                timerDisplay.classList.add('waktu-kritis');
+            } else {
+                timerDisplay.classList.remove('waktu-kritis');
+            }
+        }
+
+        function startPauseTimer() {
+            if (runningInterval === null) {
+                startPauseBtn.innerText = 'Pause';
+                startPauseBtn.style.backgroundColor = '#f39c12'; 
+                
+                runningInterval = setInterval(() => {
+                    if (sisaWaktu > 0) {
+                        sisaWaktu--; // Mengurangi 1 detik terus-menerus (Countdown)
+                        updateDisplay();
+                    } else {
+                        // Ketika waktu habis (00:00)
+                        clearInterval(runningInterval);
+                        runningInterval = null;
+                        alert("Waktu OSCE 7 Menit Telah Habis!");
+                        startPauseBtn.innerText = 'Start';
+                        startPauseBtn.style.backgroundColor = '#3498db';
+                    }
+                }, 1000); 
+            } else {
+                clearInterval(runningInterval);
+                runningInterval = null;
+                startPauseBtn.innerText = 'Start';
+                startPauseBtn.style.backgroundColor = '#3498db';
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(runningInterval);
+            runningInterval = null;
+            sisaWaktu = waktuAwal;
+            updateDisplay();
+            startPauseBtn.innerText = 'Start';
+            startPauseBtn.style.backgroundColor = '#3498db';
+        }
+
+        startPauseBtn.addEventListener('click', startPauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+        // Inisialisasi tampilan awal agar langsung memunculkan 07:00
+        updateDisplay();
+    </script>
+</body>
+</html>
